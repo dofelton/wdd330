@@ -9,7 +9,6 @@ function renderCartContents() {
     const htmlItems = `<h3>The cart is Empty</h3>`
     document.querySelector(".product-list").innerHTML = htmlItems;
   }
-
 }
 
 function cartItemTemplate(item) {

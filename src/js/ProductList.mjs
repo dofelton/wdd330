@@ -1,4 +1,4 @@
-import { renderListWithTemplate } from "./utils.mjs";
+import { renderListWithTemplate, itemsInCart } from "./utils.mjs";
 
 function productCardTemplate(product) {
     return `<li class="product-card">
@@ -24,8 +24,9 @@ export default class ProductList {
         // console.log(`init data: ${list}`)
         this.renderList(list);
     }
-
+    
     renderList(list) {
         renderListWithTemplate(productCardTemplate, this.listElement, list);
+        itemsInCart();
     }
 }

@@ -105,9 +105,13 @@ button {
 
 .cart svg {
   width: 25px;
+  overflow: visible;
 }
 .cart:hover svg {
   fill: gray;
+}
+.one-number, .two-numbers, .circle {
+  display: none;
 }
 
 /* End cart icon styles */

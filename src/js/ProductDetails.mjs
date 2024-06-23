@@ -1,4 +1,4 @@
-import { setLocalStorage, getLocalStorage } from "./utils.mjs";
+import { setLocalStorage, getLocalStorage, itemsInCart } from "./utils.mjs";
 
 // to recuperate the arrays of products in the cart from local storage
 let listCart = [];
@@ -23,6 +23,7 @@ export default class ProductDetails {
     document
       .getElementById("addToCart")
       .addEventListener("click", this.addToCart.bind(this));
+    itemsInCart();
   }
 
   addToCart() {

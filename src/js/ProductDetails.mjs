@@ -25,13 +25,13 @@ export default class ProductDetails {
       .addEventListener("click", this.addToCart.bind(this));
     itemsInCart();
   }
-
+  
   addToCart() {
     if (this.product) {
       try {
         listCart.push(this.product);
-
         setLocalStorage("so-cart", listCart);
+        location.reload();
       } catch {
         new Error("Could not add item");
       }

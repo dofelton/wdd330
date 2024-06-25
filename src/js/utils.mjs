@@ -54,10 +54,10 @@ export function renderListWithTemplate(
         var number = document.querySelector(".one-number");
         number.style.display = "block";
         number.innerHTML = inCart.length;
-      } else if (inCart.length < 10) {
+      } else if (inCart.length >= 10) {
         circle.style.display = "block";
         var display = document.querySelector(".two-numbers");
-        display.style.display = "display";
+        display.style.display = "block";
         display.innerHTML = inCart.length;
       } else {
         circle.style.display = "none";

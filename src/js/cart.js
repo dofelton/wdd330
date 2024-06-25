@@ -1,10 +1,12 @@
-import { getLocalStorage, itemsInCart } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage,  itemsInCart } from "./utils.mjs";
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
-  if (cartItems) {
+  if (cartItems.length > 0) {
     const htmlItems = cartItems.map((item) => cartItemTemplate(item));
     document.querySelector(".product-list").innerHTML = htmlItems.join("");
+    var items = document.querySelectorAll(".delete")
+    items.forEach(item => item.addEventListener("click", deleteFromCart));
   } else {
     const htmlItems = `<h3>The cart is Empty</h3>`
     document.querySelector(".product-list").innerHTML = htmlItems;
@@ -27,6 +29,7 @@ function cartItemTemplate(item) {
   <p class="cart-card__color">${item.Colors[0].ColorName}</p>
   <p class="cart-card__quantity">qty: 1</p>
   <p class="cart-card__price">$${item.FinalPrice}</p>
+  <span class="delete" id=${item.Id}>&#10005;</span>
 </li>`;
 
   return newItem;
@@ -44,6 +47,19 @@ function total(cartItems) {
   } else {
     displayTotal.style.display = "none";
   }
+}
+
+function deleteFromCart(item) {
+  var inCart = getLocalStorage("so-cart");
+  var index = 0;
+  for(const element in inCart) {
+    if (inCart[element].Id == item.target.id) {
+      index = element;
+      break;
+    }};
+  inCart.splice(index,1);
+  setLocalStorage("so-cart", inCart);
+  location.reload();
 }
 
 renderCartContents();

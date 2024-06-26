@@ -206,10 +206,17 @@ button {
   display: grid;
   grid-template-columns: auto auto auto auto;
   align-items: baseline;
+  list-style-type: none;
+  font-size: 1rem;
 }
-/* .product-grid li {
-  width: 40px;
-} */
+.product-grid h2 {
+  text-align: center;
+}
+
+.product-grid li {
+  width: 100%;
+  height: auto;
+}
 
 @media screen and (min-width: 500px) {
   body {

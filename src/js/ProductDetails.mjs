@@ -26,23 +26,20 @@ export default class ProductDetails {
   }
 
   addToCart() {
-    if (this.product) {
-      try {
-        listCart.push(this.product);
-
-        setLocalStorage("so-cart", listCart);
-      } catch {
-        new Error("Could not add item");
-      }
+    let cartContents = getLocalStorage("so-cart");
+    if (!cartContents) {
+      cartContents = [];
     }
+    cartContents.push(this.product);
+    setLocalStorage("so-cart", cartContents);
   }
 
   renderProductDetails(selector) {
     const element = document.querySelector(selector);
-
-    if (element) {
-      element.innerHTML = productDetailsTemplateConstruct(this.product);
-    }
+    element.innerAdjacentHTML(
+      "afterBegin",
+      productDetailsTemplateConstruct(this.product)
+    );
   }
 }
 
@@ -51,7 +48,7 @@ function productDetailsTemplateConstruct(product) {
     <h2 class="divider">${product.NameWithoutBrand}</h2>
     <img
       class="divider"
-      src="${product.Image}"
+      src="${product.Image.PrimaryLarge}"
       alt="${product.NameWithoutBrand}"
     />
     <p class="product-card__price">$${product.FinalPrice}</p>

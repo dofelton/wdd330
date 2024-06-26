@@ -13,21 +13,12 @@ export function getLocalStorage(key) {
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
-// set a listener for both touchend and click
-export function setClick(selector, callback) {
-  qs(selector).addEventListener("touchend", (event) => {
-    event.preventDefault();
-    callback();
-  });
-  qs(selector).addEventListener("click", callback);
-}
 
 // new function to get URL parameters
-export function getParams(param) {
+export function getParam(param) {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  const product = urlParams.get('param')
-
+  const product = urlParams.get(param)
   return product;
 }
 
@@ -47,7 +38,7 @@ export function renderListWithTemplate(
 
 export function renderWithTemplate(
   template,
-  parent,
+  parentElement,
   data,
   callback) {
       parentElement.insertAdjacentHTML("afterbegin", template);

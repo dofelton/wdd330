@@ -26,7 +26,7 @@ export default class ProductDetails {
     itemsInCart();
   }
   
-  addToCart() {
+addToCart() {
     if (this.product) {
       try {
         listCart.push(this.product);
@@ -36,6 +36,8 @@ export default class ProductDetails {
         new Error("Could not add item");
       }
     }
+    cartContents.push(this.product);
+    setLocalStorage("so-cart", cartContents);
   }
 
   renderProductDetails(selector) {
@@ -68,7 +70,7 @@ function productDetailsTemplateConstruct(product) {
     <h2 class="divider">${product.NameWithoutBrand}</h2>
     <img
       class="divider"
-      src="${product.Image}"
+      src="${product.Image.PrimaryLarge}"
       alt="${product.NameWithoutBrand}"
     />
     <p class="${classDiscount}">${discountPercentage} %</p>

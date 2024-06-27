@@ -13,21 +13,12 @@ export function getLocalStorage(key) {
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
-// set a listener for both touchend and click
-export function setClick(selector, callback) {
-  qs(selector).addEventListener("touchend", (event) => {
-    event.preventDefault();
-    callback();
-  });
-  qs(selector).addEventListener("click", callback);
-}
 
 // new function to get URL parameters
-export function getParams(param) {
+export function getParam(param) {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const product = urlParams.get(param)
-
   return product;
 }
 
@@ -46,7 +37,43 @@ export function renderListWithTemplate(
     parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
   }
 
-  export function itemsInCart() {
+export function renderWithTemplate(
+  template,
+  parentElement,
+  data,
+  callback) {
+      parentElement.insertAdjacentHTML("afterbegin", template);
+      if(callback) {
+        callback(data);
+      }
+    }
+
+async function loadTemplate(path) {
+  const res = await fetch(path);
+  const template = await res.text();
+  return template;
+}
+
+export async function loadHeaderFooter() {
+  const headerTemplate = await loadTemplate("../partials/header.html");
+  const headerElement = document.querySelector("#header");
+  const footerTemplate = await loadTemplate("../partials/footer.html");
+  const footerElement = document.querySelector("#footer");
+
+  renderWithTemplate(headerTemplate, headerElement);
+  renderWithTemplate(footerTemplate, footerElement);
+}
+
+export function setClick(selector, callback) {
+  qs(selector).addEventListener("touchend", (event) => {
+    event.preventDefault();
+    callback();
+  });
+  qs(selector).addEventListener("click", callback)
+  
+}
+
+export function itemsInCart() {
     const inCart = getLocalStorage("so-cart");
     const circle = document.querySelector(".circle");
     try {

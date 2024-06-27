@@ -22,6 +22,7 @@ export function getParam(param) {
   return product;
 }
 
+
 export function renderListWithTemplate(
   templateFn,
   parentElement,
@@ -71,3 +72,27 @@ export function setClick(selector, callback) {
   qs(selector).addEventListener("click", callback)
   
 }
+
+export function itemsInCart() {
+    const inCart = getLocalStorage("so-cart");
+    const circle = document.querySelector(".circle");
+    try {
+      if (inCart.length > 0 && inCart.length < 10) {
+        circle.style.display = "block";
+        var number = document.querySelector(".one-number");
+        number.style.display = "block";
+        number.innerHTML = inCart.length;
+      } else if (inCart.length >= 10) {
+        circle.style.display = "block";
+        var display = document.querySelector(".two-numbers");
+        display.style.display = "block";
+        display.innerHTML = inCart.length;
+      } else {
+        circle.style.display = "none";
+        document.querySelector(".one-number").style.display = "none";
+        document.querySelector(".two-numbers").style.display = " none";
+      }
+    } catch {
+      new Error("Error reading cookies");
+    }
+  }

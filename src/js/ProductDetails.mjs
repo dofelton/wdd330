@@ -1,4 +1,4 @@
-import { setLocalStorage, getLocalStorage } from "./utils.mjs";
+import { setLocalStorage, getLocalStorage, itemsInCart } from "./utils.mjs";
 
 // to recuperate the arrays of products in the cart from local storage
 let listCart = [];
@@ -23,12 +23,18 @@ export default class ProductDetails {
     document
       .getElementById("addToCart")
       .addEventListener("click", this.addToCart.bind(this));
+    itemsInCart();
   }
-
-  addToCart() {
-    let cartContents = getLocalStorage("so-cart");
-    if (!cartContents) {
-      cartContents = [];
+  
+addToCart() {
+    if (this.product) {
+      try {
+        listCart.push(this.product);
+        setLocalStorage("so-cart", listCart);
+        location.reload();
+      } catch {
+        new Error("Could not add item");
+      }
     }
     cartContents.push(this.product);
     setLocalStorage("so-cart", cartContents);
@@ -36,14 +42,30 @@ export default class ProductDetails {
 
   renderProductDetails(selector) {
     const element = document.querySelector(selector);
-    element.innerAdjacentHTML(
-      "afterBegin",
-      productDetailsTemplateConstruct(this.product)
-    );
+    element.insertAdjacentHTML("afterBegin",productDetailsTemplateConstruct(this.product));
+      // element.innerHTML = productDetailsTemplateConstruct(this.product);
   }
 }
 
 function productDetailsTemplateConstruct(product) {
+  let discountPercentage = 0;
+  let classDiscount = "discount-none";
+  let finalSalePrice = "$" + product.FinalPrice;
+
+  if (product.FinalPrice > 300) {
+    classDiscount = "discount-high";
+    discountPercentage = 30;
+    finalSalePrice = `($<s>${product.FinalPrice}</s>) <b>$${(product.FinalPrice * 0.7).toFixed(2)}</b>`;
+  } else if (product.FinalPrice > 150) {
+    discountPercentage = 20;
+    classDiscount = "discount-medium";
+    finalSalePrice = `($<s>${product.FinalPrice}</s>) <b>$${(product.FinalPrice * 0.8).toFixed(2)}</b>`;
+  } else if (product.FinalPrice > 100) {
+    discountPercentage = 10;
+    classDiscount = "discount-low";
+    finalSalePrice = `($<s>${product.FinalPrice}</s>) <b>$${(product.FinalPrice * 0.9).toFixed(2)}</b>`;
+  }
+
   return `<section class="product-detail"> <h3>${product.Brand.Name}</h3>
     <h2 class="divider">${product.NameWithoutBrand}</h2>
     <img
@@ -51,7 +73,8 @@ function productDetailsTemplateConstruct(product) {
       src="${product.Image.PrimaryLarge}"
       alt="${product.NameWithoutBrand}"
     />
-    <p class="product-card__price">$${product.FinalPrice}</p>
+    <p class="${classDiscount}">${discountPercentage} %</p>
+    <p class="product-card__price">${finalSalePrice}</p>
     <p class="product__color">${product.Colors[0].ColorName}</p>
     <p class="product__description">
     ${product.DescriptionHtmlSimple}

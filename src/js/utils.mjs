@@ -31,6 +31,7 @@ export function getParams(param) {
   return product;
 }
 
+
 export function renderListWithTemplate(
   templateFn,
   parentElement,

@@ -1,3 +1,4 @@
+
 import { renderListWithTemplate } from './utils.mjs';
 
 export default class ProductListing {
@@ -54,15 +55,22 @@ export default class ProductList {
         this.dataSource = dataSource;
         this.listElement = listElement;
     }
-
     async init() {
-        const list = await this.dataSource.getData();
-        // console.log(`init data: ${list}`)
-        this.renderList(list);
+        const getData = await this.dataSource.getData();
+        const productNeed = ["880RR", "985RF", "985PR", "344YJ"];
+        const refineList = await this.refineList(productNeed,getData);
+        this.renderList(refineList);
     }
-    
-    renderList(list) {
-        renderListWithTemplate(productCardTemplate, this.listElement, list);
-        itemsInCart();
+    renderList(getData) {
+        renderListWithTemplate(productCardTemplate, this.listElement, getData);
+    }
+    refineList(listNeded, data) {
+        var refineList =  [];
+        data.forEach(element => {
+            if (listNeded.includes(element.Id))
+                refineList.push(element)  
+        });
+        return refineList;
+
     }
 }

@@ -40,10 +40,8 @@ export default class ProductDetails {
 
   renderProductDetails(selector) {
     const element = document.querySelector(selector);
-
-    if (element) {
-      element.innerHTML = productDetailsTemplateConstruct(this.product);
-    }
+    element.insertAdjacentHTML("afterBegin",productDetailsTemplateConstruct(this.product));
+      // element.innerHTML = productDetailsTemplateConstruct(this.product);
   }
 }
 

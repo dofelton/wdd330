@@ -1,26 +1,4 @@
-
-import { renderListWithTemplate } from './utils.mjs';
-
-export default class ProductListing {
-  constructor(category, dataSource, listElement) {
-    this.category = category;
-    this.dataSource = dataSource;
-    this.listElement = listElement;
-  }
-
-  async init() {
-    const products = await this.dataSource.getData();
-
-    this.renderList(products);
-  }
-
-  renderList(list) {
-    renderListWithTemplate(createProductListItem, this.listElement, list);
-    
-    // const htmlStrings = list.map(createProductListItem);
-    // this.listElement.insertAdjacentHTML('afterbegin', htmlStrings.join(''));
-  }
-}
+import { renderListWithTemplate } from "./utils.mjs";
 
 function createProductListItem(product) {
   return `<li class="product-card">
@@ -35,7 +13,6 @@ function createProductListItem(product) {
             >
           </li>`;
 }
-import { renderListWithTemplate, itemsInCart } from "./utils.mjs";
 
 function productCardTemplate(product) {
     return `<li class="product-card">
@@ -62,8 +39,8 @@ export default class ProductList {
         document.querySelector(".title").innerHTML = this.category;
 
     }
-    renderList(getData) {
-        renderListWithTemplate(productCardTemplate, this.listElement, getData);
+    renderList(list) {
+        renderListWithTemplate(productCardTemplate, this.listElement, list);
     }
     refineList(listNeded, data) {
         var refineList =  [];

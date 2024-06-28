@@ -10,4 +10,3 @@ const listing = new ProductList(category, dataSource, element);
 
 listing.init();
 
-// productList(".product-list", category);

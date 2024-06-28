@@ -229,8 +229,8 @@ button {
 .product-grid {
   display: grid;
   grid-template-columns: auto auto auto auto;
-  align-items: baseline;
   list-style-type: none;
+  align-items:baseline;
   font-size: 1rem;
 }
 .product-grid h2 {
